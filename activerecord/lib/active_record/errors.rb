@@ -200,6 +200,10 @@ module ActiveRecord
   class ConfigurationError < ActiveRecordError
   end
 
+  # Raised on attempt to update a read only attribute
+  class ReadOnlyAttribute < ActiveRecordError
+  end
+
   # Raised on attempt to update record that is instantiated as read only.
   class ReadOnlyRecord < ActiveRecordError
   end

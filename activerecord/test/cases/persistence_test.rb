@@ -535,7 +535,7 @@ class PersistenceTest < ActiveRecord::TestCase
 
   def test_update_attribute_for_readonly_attribute
     minivan = Minivan.find("m1")
-    assert_raises(ActiveRecord::ActiveRecordError) { minivan.update_attribute(:color, "black") }
+    assert_raises(ActiveRecord::ReadOnlyAttribute) { minivan.update_attribute(:color, "black") }
   end
 
   def test_update_attribute_with_one_updated
@@ -617,7 +617,7 @@ class PersistenceTest < ActiveRecord::TestCase
   def test_update_column_for_readonly_attribute
     minivan = Minivan.find("m1")
     prev_color = minivan.color
-    assert_raises(ActiveRecord::ActiveRecordError) { minivan.update_column(:color, "black") }
+    assert_raises(ActiveRecord::ReadOnlyAttribute) { minivan.update_column(:color, "black") }
     assert_equal prev_color, minivan.color
   end
 
@@ -709,7 +709,7 @@ class PersistenceTest < ActiveRecord::TestCase
     minivan = Minivan.find("m1")
     prev_color = minivan.color
     prev_name = minivan.name
-    assert_raises(ActiveRecord::ActiveRecordError) { minivan.update_columns(name: "My old minivan", color: "black") }
+    assert_raises(ActiveRecord::ReadOnlyAttribute) { minivan.update_columns(name: "My old minivan", color: "black") }
     assert_equal prev_color, minivan.color
     assert_equal prev_name, minivan.name
 

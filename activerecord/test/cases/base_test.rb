@@ -633,10 +633,10 @@ class BasicsTest < ActiveRecord::TestCase
     post.reload
     assert_equal "cannot change this", post.title
 
-    post.update(title: "try to change", body: "changed")
+    assert_raises(ActiveRecord::ReadOnlyAttribute) { post.update(title: "try to change", body: "changed") }
     post.reload
     assert_equal "cannot change this", post.title
-    assert_equal "changed", post.body
+    assert_equal "changeable", post.body
   end
 
   def test_unicode_column_name

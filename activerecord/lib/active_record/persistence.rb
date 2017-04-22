@@ -567,6 +567,9 @@ module ActiveRecord
     # Updates the associated record with values matching those of the instance attributes.
     # Returns the number of affected rows.
     def _update_record(attribute_names = self.attribute_names)
+      attribute_names.each do |attribute_name|
+        verify_readonly_attribute(attribute_name)
+      end
       attributes_values = arel_attributes_with_values_for_update(attribute_names)
       if attributes_values.empty?
         rows_affected = 0
@@ -597,7 +600,7 @@ module ActiveRecord
     end
 
     def verify_readonly_attribute(name)
-      raise ActiveRecordError, "#{name} is marked as readonly" if self.class.readonly_attributes.include?(name)
+      raise ReadOnlyAttribute, "#{name} is marked as readonly" if self.class.readonly_attributes.include?(name)
     end
 
     def _raise_record_not_destroyed
